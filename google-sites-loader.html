@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;background:#000;color:#fff;font-family:sans-serif">
+<div id="status" style="padding:12px;text-align:center">Loading Cookie Clicker...</div>
+<script>
+const BASE='https://cdn.jsdelivr.net/gh/swithred/cookie-clicker-stream@main/';
+(async()=>{
+  const status=document.getElementById('status');
+  try{
+    const res=await fetch(BASE+'index.html',{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    let html=await res.text();
+    if(!/<base\s/i.test(html)){
+      html=html.replace(/<head>/i,'<head><base href="'+BASE+'">');
+    }
+    document.open();
+    document.write(html);
+    document.close();
+  }catch(e){
+    status.textContent='Failed to load Cookie Clicker: '+e.message;
+  }
+})();
+</script>
+</body>
+</html>
